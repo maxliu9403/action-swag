@@ -97,6 +97,13 @@ var initFlags = []cli.Flag{
 	},
 }
 
+func btoi(b bool) int {
+	if b {
+		return 1
+	}
+	return 0
+}
+
 func initAction(c *cli.Context) error {
 	strategy := c.String(propertyStrategyFlag)
 
@@ -113,7 +120,7 @@ func initAction(c *cli.Context) error {
 		PropNamingStrategy:  strategy,
 		OutputDir:           c.String(outputFlag),
 		ParseVendor:         c.Bool(parseVendorFlag),
-		ParseDependency:     c.Bool(parseDependencyFlag),
+		ParseDependency:     btoi(c.Bool(parseDependencyFlag)),
 		MarkdownFilesDir:    c.String(markdownFilesFlag),
 		ParseInternal:       c.Bool(parseInternalFlag),
 		GeneratedTime:       c.Bool(generatedTimeFlag),
