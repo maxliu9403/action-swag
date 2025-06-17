@@ -584,52 +584,53 @@ func parseMimeTypeList(mimeTypeList string, typeList *[]string, format string) e
 	return nil
 }
 
-var routerPattern = regexp.MustCompile(`^(\?[\w\.=]*)[[:blank:]]+\[(\w+)]`)
+// var routerPattern = regexp.MustCompile(`^(\?[\w\.=]*)[[:blank:]]+\[(\w+)]`)
+var routerPattern = regexp.MustCompile(`^(\?[\w\.=]+)\s*\[(\w+)]$`)
 
 // ParseRouterComment parses comment for given `router` comment string.
-//func (operation *Operation) ParseRouterComment(commentLine string) error {
-//	matches := routerPattern.FindStringSubmatch(commentLine)
-//	if len(matches) != 3 {
-//		return fmt.Errorf("can not parse router comment \"%s\"", commentLine)
-//	}
-//	signature := RouteProperties{
-//		Path:       matches[1],
-//		HTTPMethod: strings.ToUpper(matches[2]),
-//	}
-//
-//	if _, ok := allMethod[signature.HTTPMethod]; !ok {
-//		return fmt.Errorf("invalid method: %s", signature.HTTPMethod)
-//	}
-//
-//	operation.RouterProperties = append(operation.RouterProperties, signature)
-//
-//	return nil
-//}
 func (operation *Operation) ParseRouterComment(commentLine string) error {
 	matches := routerPattern.FindStringSubmatch(commentLine)
 	if len(matches) != 3 {
 		return fmt.Errorf("can not parse router comment \"%s\"", commentLine)
 	}
-	path := matches[1]
-	method := strings.ToUpper(matches[2])
-
-	// ⭐️ 自定义支持 ?Action=XXX 写法
-	if strings.HasPrefix(path, "?Action=") {
-		action := strings.TrimPrefix(path, "?Action=")
-		path = "/action/" + action // 可自定义映射
-	}
-
-	if _, ok := allMethod[method]; !ok {
-		return fmt.Errorf("invalid method: %s", method)
-	}
-
 	signature := RouteProperties{
-		Path:       path,
-		HTTPMethod: method,
+		Path:       matches[1],
+		HTTPMethod: strings.ToUpper(matches[2]),
 	}
+
+	if _, ok := allMethod[signature.HTTPMethod]; !ok {
+		return fmt.Errorf("invalid method: %s", signature.HTTPMethod)
+	}
+
 	operation.RouterProperties = append(operation.RouterProperties, signature)
 	return nil
 }
+
+//func (operation *Operation) ParseRouterComment(commentLine string) error {
+//	matches := routerPattern.FindStringSubmatch(commentLine)
+//	if len(matches) != 3 {
+//		return fmt.Errorf("can not parse router comment \"%s\"", commentLine)
+//	}
+//	path := matches[1]
+//	method := strings.ToUpper(matches[2])
+//
+//	// ⭐️ 自定义支持 ?Action=XXX 写法
+//	if strings.HasPrefix(path, "?Action=") {
+//		action := strings.TrimPrefix(path, "?Action=")
+//		path = "/action/" + action // 可自定义映射
+//	}
+//
+//	if _, ok := allMethod[method]; !ok {
+//		return fmt.Errorf("invalid method: %s", method)
+//	}
+//
+//	signature := RouteProperties{
+//		Path:       path,
+//		HTTPMethod: method,
+//	}
+//	operation.RouterProperties = append(operation.RouterProperties, signature)
+//	return nil
+//}
 
 // ParseSecurityComment parses comment for given `security` comment string.
 func (operation *Operation) ParseSecurityComment(commentLine string) error {
