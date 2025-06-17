@@ -219,7 +219,9 @@ func (operation *Operation) parseArrayParam(param *spec.Parameter, paramType, re
 
 // ParseParamComment parses params return []string of param properties
 // E.g. @Param	queryText		formData	      string	  true		        "The email for login"
-//              [param name]    [paramType] [data type]  [is mandatory?]   [Comment]
+//
+//	[param name]    [paramType] [data type]  [is mandatory?]   [Comment]
+//
 // E.g. @Param   some_id     path    int     true        "Some ID".
 func (operation *Operation) ParseParamComment(commentLine string, astFile *ast.File) error {
 	matches := paramPattern.FindStringSubmatch(commentLine)
@@ -585,22 +587,47 @@ func parseMimeTypeList(mimeTypeList string, typeList *[]string, format string) e
 var routerPattern = regexp.MustCompile(`^(\?[\w\.=]*)[[:blank:]]+\[(\w+)]`)
 
 // ParseRouterComment parses comment for given `router` comment string.
+//func (operation *Operation) ParseRouterComment(commentLine string) error {
+//	matches := routerPattern.FindStringSubmatch(commentLine)
+//	if len(matches) != 3 {
+//		return fmt.Errorf("can not parse router comment \"%s\"", commentLine)
+//	}
+//	signature := RouteProperties{
+//		Path:       matches[1],
+//		HTTPMethod: strings.ToUpper(matches[2]),
+//	}
+//
+//	if _, ok := allMethod[signature.HTTPMethod]; !ok {
+//		return fmt.Errorf("invalid method: %s", signature.HTTPMethod)
+//	}
+//
+//	operation.RouterProperties = append(operation.RouterProperties, signature)
+//
+//	return nil
+//}
 func (operation *Operation) ParseRouterComment(commentLine string) error {
 	matches := routerPattern.FindStringSubmatch(commentLine)
 	if len(matches) != 3 {
 		return fmt.Errorf("can not parse router comment \"%s\"", commentLine)
 	}
+	path := matches[1]
+	method := strings.ToUpper(matches[2])
+
+	// ⭐️ 自定义支持 ?Action=XXX 写法
+	if strings.HasPrefix(path, "?Action=") {
+		action := strings.TrimPrefix(path, "?Action=")
+		path = "/action/" + action // 可自定义映射
+	}
+
+	if _, ok := allMethod[method]; !ok {
+		return fmt.Errorf("invalid method: %s", method)
+	}
+
 	signature := RouteProperties{
-		Path:       matches[1],
-		HTTPMethod: strings.ToUpper(matches[2]),
+		Path:       path,
+		HTTPMethod: method,
 	}
-
-	if _, ok := allMethod[signature.HTTPMethod]; !ok {
-		return fmt.Errorf("invalid method: %s", signature.HTTPMethod)
-	}
-
 	operation.RouterProperties = append(operation.RouterProperties, signature)
-
 	return nil
 }
 
