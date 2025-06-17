@@ -44,8 +44,8 @@ github.com/mailru/easyjson v0.0.0-20190626092158-b2ccc519800e/go.mod h1:C1wdFJiN
 github.com/mailru/easyjson v0.7.6/go.mod h1:xzfreul335JAWq5oZzymOObrkdz5UnU4kGfJJLY9Nlc=
 github.com/mailru/easyjson v0.7.7 h1:UGYAvKxe3sBsEDzO8ZeWOSlIQfWFlxbzLZe7hwFURr0=
 github.com/mailru/easyjson v0.7.7/go.mod h1:xzfreul335JAWq5oZzymOObrkdz5UnU4kGfJJLY9Nlc=
-github.com/maxliu9403/action-spec v1.0.0 h1:DEG6Gk9DfLmY1ky/spWyQ1j1YmsuPRvY9Wf5XvkPOOo=
-github.com/maxliu9403/action-spec v1.0.0/go.mod h1:oBhr1pl8BecAlsVW5yfxiY7VJaivQ9FJlr1ARns6+d4=
+github.com/maxliu9403/action-spec v1.0.1 h1:MPIbhECWOnE0fIJsnGIZxP2gIqZn+eb5EFdOd+GO/P8=
+github.com/maxliu9403/action-spec v1.0.1/go.mod h1:1CIpA6iwxCGGdLlI3VNxkXxLCrotOW88C0W9sjYaj3o=
 github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e/go.mod h1:zD1mROLANZcx1PVRCS0qkT7pwLkGfwJo4zjcN/Tysno=
 github.com/otiai10/copy v1.12.0 h1:cLMgSQnXBs1eehF0Wy/FAGsgDTDmAqFR7rQylBb1nDY=
 github.com/otiai10/copy v1.12.0/go.mod h1:rSaLseMUsZFFbsFGc7wCJnnkTAvdc5L6VWxPE4308Ww=

@@ -6,7 +6,7 @@ require (
 	github.com/KyleBanks/depth v1.2.1
 	github.com/agiledragon/gomonkey/v2 v2.10.1
 	github.com/ghodss/yaml v1.0.0
-	github.com/maxliu9403/action-spec v1.0.0
+	github.com/maxliu9403/action-spec v1.0.1
 	github.com/otiai10/copy v1.12.0
 	github.com/stretchr/testify v1.8.4
 	github.com/swaggo/swag v1.16.4
